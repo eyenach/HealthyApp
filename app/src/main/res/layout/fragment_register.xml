@@ -25,31 +25,24 @@
             android:padding="25dp">
 
             <EditText
-                android:id="@+id/regis_user_id"
+                android:id="@+id/regis_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="User Id"
-                android:drawableLeft="@drawable/ic_user"/>
-            
-            <EditText
-                android:id="@+id/regis_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Name"
-                android:drawableLeft="@drawable/ic_name"/>
-            
-            <EditText
-                android:id="@+id/regis_age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Age"
-                android:drawableLeft="@drawable/ic_age"/>
+                android:hint="Email"
+                android:drawableLeft="@drawable/ic_email"/>
 
             <EditText
                 android:id="@+id/regis_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                android:drawableLeft="@drawable/ic_pass"/>
+
+            <EditText
+                android:id="@+id/regis_repass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Re-Password"
                 android:drawableLeft="@drawable/ic_pass"/>
 
             <Button
