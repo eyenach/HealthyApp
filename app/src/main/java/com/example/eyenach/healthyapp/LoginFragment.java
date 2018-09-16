@@ -58,7 +58,7 @@ public class LoginFragment extends Fragment {
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
                                     .addToBackStack(null)
-                                    .replace(R.id.main_view, new BmiFragment())
+                                    .replace(R.id.main_view, new MenuFragment())
                                     .commit();
                         }
                     }).addOnFailureListener(new OnFailureListener() {

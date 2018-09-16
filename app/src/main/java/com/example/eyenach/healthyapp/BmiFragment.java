@@ -26,6 +26,7 @@ public class BmiFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         initCalcBtn();
+        initBackBtn();
     }
 
     void initCalcBtn(){
@@ -53,6 +54,19 @@ public class BmiFragment extends Fragment {
 
                     Log.d("BMI", "BMI IS VALUE");
                 }
+            }
+        });
+    }
+
+    void initBackBtn(){
+        Button _backBtn = getView().findViewById(R.id.bmi_back_btn);
+        _backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new MenuFragment())
+                        .commit();
             }
         });
     }

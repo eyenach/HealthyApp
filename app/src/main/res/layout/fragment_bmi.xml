@@ -24,6 +24,12 @@
             android:orientation="vertical"
             android:padding="25dp">
 
+            <Button
+                android:id="@+id/bmi_back_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="back"/>
+
             <EditText
                 android:id="@+id/bmi_height"
                 android:layout_width="match_parent"
