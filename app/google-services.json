@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "827918010696",
+    "firebase_url": "https://healthyapp-b29b3.firebaseio.com",
+    "project_id": "healthyapp-b29b3",
+    "storage_bucket": "healthyapp-b29b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827918010696:android:8871779f71d7a92e",
+        "android_client_info": {
+          "package_name": "com.example.eyenach.healthyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "827918010696-k7255bdbteghl627jnpbfnbqvpppdotr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjxyYFlBaBc_EWGcEGKF4gKxvi9dWOYlI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
