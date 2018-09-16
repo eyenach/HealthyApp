@@ -18,11 +18,11 @@
             android:layout_gravity="center"/>
         
         <EditText
-            android:id="@+id/login_user_id"
+            android:id="@+id/login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="User ID"
-            android:drawableLeft="@drawable/ic_user"
+            android:hint="Email"
+            android:drawableLeft="@drawable/ic_email"
             android:layout_marginTop="10dp"/>
         
         <EditText
