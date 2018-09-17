@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,14 @@ public class WeightFragment extends Fragment {
         weights.add(new Weight("2 Jan 2018", 64, "DOWN"));
         weights.add(new Weight("3 Jan 2018", 63, "UP"));
 
-        ListView _weightList = getView().findViewById(R.id.weight_list);
-        WeightAdapter _weightAdapter = new WeightAdapter(getActivity(), R.layout.fragment_weight_item, weights);
-        _weightList.setAdapter(_weightAdapter);
+        Log.d("WEIGHT", "ADD Weight");
 
+        ListView _weightList = getView().findViewById(R.id.weight_list);
+        Log.d("WEIGHT", "_weightList");
+        WeightAdapter _weightAdapter = new WeightAdapter(getActivity(), R.layout.fragment_weight_item, weights);
+        Log.d("WEIGHT", "_weightAdapter");
+        _weightList.setAdapter(_weightAdapter);
+        Log.d("WEIGHT", "_setAdapter");
         initAddBtn();
     }
 

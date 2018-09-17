@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.eyenach.healthyapp.weight.WeightFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class MenuFragment extends Fragment {
 
         menu.add("BMI");
         menu.add("Weight");
-        menu.add("Logout");
+        menu.add("Sign Out");
 
         ListView _menuList = getView().findViewById(R.id.menu_list);
         final ArrayAdapter<String> menuAdapter = new ArrayAdapter<String>(
@@ -46,9 +47,7 @@ public class MenuFragment extends Fragment {
         _menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                Log.d("MENU", "SELECT"+menu.get(i));
-                menu.add("New value");
-                menuAdapter.notifyDataSetChanged();
+                Log.d("MENU", "SELECT "+menu.get(i));
 
                 if(menu.get(i).equals("BMI")){
                     getActivity().getSupportFragmentManager()
@@ -56,12 +55,15 @@ public class MenuFragment extends Fragment {
                             .addToBackStack(null)
                             .replace(R.id.main_view, new BmiFragment())
                             .commit();
-                } else {
+                } else if(menu.get(i).equals("Weight")){
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
                             .replace(R.id.main_view, new WeightFragment())
                             .commit();
+                } else {
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    mAuth.signOut();
                 }
             }
         });

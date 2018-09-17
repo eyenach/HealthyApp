@@ -3,6 +3,7 @@ package com.example.eyenach.healthyapp.weight;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,8 @@ public class WeightAdapter extends ArrayAdapter<Weight> {
     }
 
     @Override
-    public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View _weightItem = LayoutInflater.from(context).inflate(R.layout.fragment_weight_item, parent, false);
-
         TextView _date = _weightItem.findViewById(R.id.weight_item_date);
         TextView _weight = _weightItem.findViewById(R.id.weight_item_weight);
         TextView _status = _weightItem.findViewById(R.id.weight_item_status);
