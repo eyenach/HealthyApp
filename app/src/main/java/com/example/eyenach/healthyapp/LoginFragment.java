@@ -32,6 +32,10 @@ public class LoginFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        if(mAuth.getCurrentUser() != null){
+            gotoMenu();
+        }
+
         initLoginBtn();
         initRegisBtn();
     }
@@ -47,9 +51,7 @@ public class LoginFragment extends Fragment {
                 final String _emailStr = _email.getText().toString();
                 final String _passStr = _pass.getText().toString();
 
-                if(mAuth.getCurrentUser() != null){
-                    checkUser(_emailStr, _passStr);
-                } else if(_emailStr.isEmpty() || _passStr.isEmpty()){
+                if(_emailStr.isEmpty() || _passStr.isEmpty()){
                     Log.d("LOGIN", "USERNAME OR PASSWORD IS EMPTY");
                     Toast.makeText(getActivity(), "กรุณาระบุ username or password", Toast.LENGTH_SHORT).show();
                 } else {

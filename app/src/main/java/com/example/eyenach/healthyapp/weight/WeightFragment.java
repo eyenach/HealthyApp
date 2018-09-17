@@ -13,11 +13,23 @@ import android.widget.ListView;
 
 import com.example.eyenach.healthyapp.FormFragment;
 import com.example.eyenach.healthyapp.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class WeightFragment extends Fragment {
 
+    FirebaseFirestore mdb;
+    FirebaseAuth mAuth;
     ArrayList<Weight> weights = new ArrayList<>();
 
     @Nullable
@@ -30,13 +42,25 @@ public class WeightFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        weights.add(new Weight("1 Jan 2018", 63, "UP"));
-        weights.add(new Weight("2 Jan 2018", 64, "DOWN"));
-        weights.add(new Weight("3 Jan 2018", 63, "UP"));
+        mdb = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
-        ListView _weightList = getView().findViewById(R.id.weight_list);
-        WeightAdapter _weightAdapter = new WeightAdapter(getActivity(), R.layout.fragment_weight_item, weights);
-        _weightList.setAdapter(_weightAdapter);
+        String _uid = mAuth.getCurrentUser().getUid();
+
+        mdb.collection("myfitness").document(_uid).collection("weight").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                    if(doc.get("date") != null && doc.get("weight") != null && doc.get("status") != null){
+                        weights.add(new Weight(doc.get("date"), doc.get("weight"), doc.get("status")));
+
+                        ListView _weightList = getView().findViewById(R.id.weight_list);
+                        WeightAdapter _weightAdapter = new WeightAdapter(getActivity(), R.layout.fragment_weight_item, weights);
+                        _weightList.setAdapter(_weightAdapter);
+                    }
+                }
+            }
+        });
 
         initAddBtn();
     }

@@ -67,31 +67,35 @@ public class FormFragment extends Fragment {
                 String _weightStr = _weight.getText().toString();
                 String _uid = _mAuth.getCurrentUser().getUid(); //get uid form user
 
-                //collection less than 5
-                Weight _data = new Weight(_dateStr, Integer.valueOf(_weightStr), "UP");
-                _firestore.collection("myfitness")
-                        .document(_uid)
-                        .collection("weight")
-                        .document(_dateStr)
-                        .set(_data).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("FORM", "SAVE COMPLETE");
-                        Toast.makeText(getActivity(), "บันทึกเรียบร้อย", Toast.LENGTH_SHORT).show();
+                if(_dateStr.isEmpty() || _weightStr.isEmpty()){
+                    Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    //collection less than 5
+                    Weight _data = new Weight(_dateStr, Integer.valueOf(_weightStr), "UP");
+                    _firestore.collection("myfitness")
+                            .document(_uid)
+                            .collection("weight")
+                            .document(_dateStr)
+                            .set(_data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("FORM", "SAVE COMPLETE");
+                            Toast.makeText(getActivity(), "บันทึกเรียบร้อย", Toast.LENGTH_SHORT).show();
 
-                        getActivity().getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.main_view, new WeightFragment())
-                                .commit();
-                        Log.d("FORM", "GOTO WEIGHT");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("FORM", "SAVE FAIL");
-                        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                            getActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.main_view, new WeightFragment())
+                                    .commit();
+                            Log.d("FORM", "GOTO WEIGHT");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("FORM", "SAVE FAIL");
+                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
     }
