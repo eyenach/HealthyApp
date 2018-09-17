@@ -65,7 +65,7 @@ public class FormFragment extends Fragment {
 
                 String _dateStr = _date.getText().toString();
                 String _weightStr = _weight.getText().toString();
-                String _uid = _mAuth.getCurrentUser().getUid();
+                String _uid = _mAuth.getCurrentUser().getUid(); //get uid form user
 
                 //collection less than 5
                 Weight _data = new Weight(_dateStr, Integer.valueOf(_weightStr), "UP");
@@ -89,6 +89,7 @@ public class FormFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d("FORM", "SAVE FAIL");
+                        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

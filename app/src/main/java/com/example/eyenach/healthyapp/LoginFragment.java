@@ -44,29 +44,16 @@ public class LoginFragment extends Fragment {
                 EditText _email = getView().findViewById(R.id.login_email);
                 EditText _pass = getView().findViewById(R.id.login_pass);
 
-                String _emailStr = _email.getText().toString();
-                String _passStr = _pass.getText().toString();
+                final String _emailStr = _email.getText().toString();
+                final String _passStr = _pass.getText().toString();
 
-                if(_emailStr.isEmpty() || _passStr.isEmpty()){
+                if(mAuth.getCurrentUser() != null){
+                    checkUser(_emailStr, _passStr);
+                } else if(_emailStr.isEmpty() || _passStr.isEmpty()){
                     Log.d("LOGIN", "USERNAME OR PASSWORD IS EMPTY");
                     Toast.makeText(getActivity(), "กรุณาระบุ username or password", Toast.LENGTH_SHORT).show();
-                }  else {
-                    Log.d("LOGIN", "LOGIN WITH EMAIL");
-                    mAuth.signInWithEmailAndPassword(_emailStr, _passStr).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            getActivity().getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .addToBackStack(null)
-                                    .replace(R.id.main_view, new MenuFragment())
-                                    .commit();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(), "กรุณาลงทะเบียนก่อนเข้าใช้งาน", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                } else {
+                    checkUser(_emailStr, _passStr); //เช็คว่ายืนยันอีเมลแล้วรึยัง
                 }
             }
         });
@@ -84,5 +71,28 @@ public class LoginFragment extends Fragment {
                         .commit();
             }
         });
+    }
+
+    void checkUser(String email, String pass){
+        mAuth.signInWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                if(authResult.getUser().isEmailVerified()){
+                    gotoMenu();
+                } else {
+                    Toast.makeText(getActivity(), "กรุณายืนยันอีเมลก่อน", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "กรุณาลงทะเบียนก่อนเข้าใช้งาน", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    void gotoMenu(){
+        Log.d("LOGIN", "LOGIN WITH EMAIL");
+        getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.main_view, new MenuFragment()).commit();
     }
 }

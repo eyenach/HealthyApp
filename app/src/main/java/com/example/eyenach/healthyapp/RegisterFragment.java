@@ -48,7 +48,10 @@ public class RegisterFragment extends Fragment {
                 String _passStr = _pass.getText().toString();
                 String _repassStr = _repass.getText().toString();
 
-                if(_passStr.length()<6){
+                if(_emailStr.isEmpty() || _passStr.isEmpty() || _repassStr.isEmpty()){
+                    Log.d("REGISTER", "FIELD IS EMPTY");
+                    Toast.makeText(getActivity(), "กรุณากรอกข้อมูลให้ครบถ้วย", Toast.LENGTH_SHORT).show();
+                } else if(_passStr.length()<6){
                     Log.d("REGISTER", "PASSWORD TOO SHORT");
                     Toast.makeText(getActivity(), "password ต้องมีความยาวมากกว่า 6 ตัวอักษร", Toast.LENGTH_SHORT).show();
                 } else if(!_passStr.equals(_repassStr)){

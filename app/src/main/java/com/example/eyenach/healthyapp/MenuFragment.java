@@ -50,12 +50,14 @@ public class MenuFragment extends Fragment {
                 Log.d("MENU", "SELECT "+menu.get(i));
 
                 if(menu.get(i).equals("BMI")){
+                    Log.d("MENU", "GOTO BMI");
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
                             .replace(R.id.main_view, new BmiFragment())
                             .commit();
                 } else if(menu.get(i).equals("Weight")){
+                    Log.d("MENU", "GOTO WEIGHT");
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
@@ -64,6 +66,13 @@ public class MenuFragment extends Fragment {
                 } else {
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     mAuth.signOut();
+
+                    Log.d("MENU", "GOTO LOGIN");
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.main_view, new LoginFragment())
+                            .commit();
                 }
             }
         });
