@@ -4,15 +4,25 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.eyenach.healthyapp.weight.Weight;
 import com.example.eyenach.healthyapp.weight.WeightFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FormFragment extends Fragment {
+
+    FirebaseFirestore _firestore;
+    FirebaseAuth _mAuth;
 
     @Nullable
     @Override
@@ -23,6 +33,9 @@ public class FormFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        _firestore = FirebaseFirestore.getInstance();
+        _mAuth = FirebaseAuth.getInstance();
 
         initBackBtn();
         initSaveBtn();
@@ -47,7 +60,37 @@ public class FormFragment extends Fragment {
         _saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "บันทึกเรียบร้อย", Toast.LENGTH_SHORT).show();
+                EditText _date = getView().findViewById(R.id.form_date);
+                EditText _weight = getView().findViewById(R.id.form_weight);
+
+                String _dateStr = _date.getText().toString();
+                String _weightStr = _weight.getText().toString();
+                String _uid = _mAuth.getCurrentUser().getUid();
+
+                //collection less than 5
+                Weight _data = new Weight(_dateStr, Integer.valueOf(_weightStr), "UP");
+                _firestore.collection("myfitness")
+                        .document(_uid)
+                        .collection("weight")
+                        .document(_dateStr)
+                        .set(_data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("FORM", "SAVE COMPLETE");
+                        Toast.makeText(getActivity(), "บันทึกเรียบร้อย", Toast.LENGTH_SHORT).show();
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.main_view, new WeightFragment())
+                                .commit();
+                        Log.d("FORM", "GOTO WEIGHT");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("FORM", "SAVE FAIL");
+                    }
+                });
             }
         });
     }
