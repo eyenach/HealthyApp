@@ -72,6 +72,7 @@ public class FormFragment extends Fragment {
                 } else {
                     //collection less than 5
                     Weight _data = new Weight(_dateStr, Integer.valueOf(_weightStr), "UP");
+
                     _firestore.collection("myfitness")
                             .document(_uid)
                             .collection("weight")

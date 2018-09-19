@@ -52,7 +52,7 @@ public class WeightFragment extends Fragment {
             public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                 for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                     if(doc.get("date") != null && doc.get("weight") != null && doc.get("status") != null){
-                        weights.add(new Weight(doc.get("date"), doc.get("weight"), doc.get("status")));
+                        weights.add(new Weight(doc.get("date").toString(), Integer.parseInt(doc.get("weight").toString()), doc.get("status").toString()));
 
                         ListView _weightList = getView().findViewById(R.id.weight_list);
                         WeightAdapter _weightAdapter = new WeightAdapter(getActivity(), R.layout.fragment_weight_item, weights);
@@ -70,6 +70,7 @@ public class WeightFragment extends Fragment {
         _addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("WEIGHT", "GOTO FORM");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, new FormFragment())
