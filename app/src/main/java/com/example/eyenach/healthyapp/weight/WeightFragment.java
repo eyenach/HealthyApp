@@ -44,21 +44,23 @@ public class WeightFragment extends Fragment {
 
         mdb = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-
         String _uid = mAuth.getCurrentUser().getUid();
+
+        final ListView _weightList = getView().findViewById(R.id.weight_list);
+        final WeightAdapter _weightAdapter = new WeightAdapter(getActivity(), R.layout.fragment_weight_item, weights);
+
+        _weightAdapter.clear();
 
         mdb.collection("myfitness").document(_uid).collection("weight").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                _weightAdapter.clear();
                 for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
                     if(doc.get("date") != null && doc.get("weight") != null && doc.get("status") != null){
                         weights.add(new Weight(doc.get("date").toString(), Integer.parseInt(doc.get("weight").toString()), doc.get("status").toString()));
-
-                        ListView _weightList = getView().findViewById(R.id.weight_list);
-                        WeightAdapter _weightAdapter = new WeightAdapter(getActivity(), R.layout.fragment_weight_item, weights);
-                        _weightList.setAdapter(_weightAdapter);
                     }
                 }
+                _weightList.setAdapter(_weightAdapter);
             }
         });
 

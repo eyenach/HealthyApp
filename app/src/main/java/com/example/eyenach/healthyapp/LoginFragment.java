@@ -17,10 +17,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginFragment extends Fragment {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    final FirebaseUser mUser = mAuth.getCurrentUser();
 
     @Nullable
     @Override
@@ -32,7 +34,7 @@ public class LoginFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(mAuth.getCurrentUser() != null){
+        if(mUser != null){
             gotoMenu();
         }
 
