@@ -17,12 +17,18 @@ import com.example.eyenach.healthyapp.weight.WeightFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class FormFragment extends Fragment {
 
     FirebaseFirestore _firestore;
     FirebaseAuth _mAuth;
+    FirebaseFirestore mdb;
 
     @Nullable
     @Override
@@ -48,8 +54,8 @@ public class FormFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .addToBackStack(null)
                         .replace(R.id.main_view, new WeightFragment())
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -86,6 +92,7 @@ public class FormFragment extends Fragment {
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.main_view, new WeightFragment())
+                                    .addToBackStack(null)
                                     .commit();
                             Log.d("FORM", "GOTO WEIGHT");
                         }

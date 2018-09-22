@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginFragment extends Fragment {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    final FirebaseUser mUser = mAuth.getCurrentUser();
+    FirebaseUser mUser = mAuth.getCurrentUser();
 
     @Nullable
     @Override
@@ -50,8 +50,8 @@ public class LoginFragment extends Fragment {
                 EditText _email = getView().findViewById(R.id.login_email);
                 EditText _pass = getView().findViewById(R.id.login_pass);
 
-                final String _emailStr = _email.getText().toString();
-                final String _passStr = _pass.getText().toString();
+                String _emailStr = _email.getText().toString();
+                String _passStr = _pass.getText().toString();
 
                 if(_emailStr.isEmpty() || _passStr.isEmpty()){
                     Log.d("LOGIN", "USERNAME OR PASSWORD IS EMPTY");
@@ -70,8 +70,8 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .addToBackStack(null)
                         .replace(R.id.main_view, new RegisterFragment())
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -97,6 +97,6 @@ public class LoginFragment extends Fragment {
 
     void gotoMenu(){
         Log.d("LOGIN", "LOGIN WITH EMAIL");
-        getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.main_view, new MenuFragment()).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new MenuFragment()).addToBackStack(null).commit();
     }
 }

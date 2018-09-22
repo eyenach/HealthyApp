@@ -70,8 +70,8 @@ public class MenuFragment extends Fragment {
                     Log.d("MENU", "GOTO LOGIN");
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
-                            .addToBackStack(null)
                             .replace(R.id.main_view, new LoginFragment())
+                            .addToBackStack(null)
                             .commit();
                 }
             }

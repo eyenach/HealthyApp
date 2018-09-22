@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterFragment extends Fragment {
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Nullable
     @Override
@@ -79,17 +79,19 @@ public class RegisterFragment extends Fragment {
         _user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d("REGISTER", "SEND ALREADY");
+                mAuth.signOut();
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .addToBackStack(null)
                         .replace(R.id.main_view, new LoginFragment())
+                        .addToBackStack(null)
                         .commit();
+                Log.d("REGISTER", "GOTO LOGIN");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
+                Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
+                Log.d("REGISTER", "Send Verified Error");
             }
         });
     }

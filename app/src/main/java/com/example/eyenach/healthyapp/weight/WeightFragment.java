@@ -76,6 +76,7 @@ public class WeightFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, new FormFragment())
+                        .addToBackStack(null)
                         .commit();
             }
         });
