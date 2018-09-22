@@ -90,7 +90,7 @@ public class LoginFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "กรุณาลงทะเบียนก่อนเข้าใช้งาน", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
             }
         });
     }
