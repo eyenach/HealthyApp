@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.eyenach.healthyapp.sleep.SleepFragment;
 import com.example.eyenach.healthyapp.weight.WeightFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -35,6 +36,7 @@ public class MenuFragment extends Fragment {
 
         menu.add("BMI");
         menu.add("Weight");
+        menu.add("Sleep");
         menu.add("Sign Out");
 
         ListView _menuList = getView().findViewById(R.id.menu_list);
@@ -62,6 +64,13 @@ public class MenuFragment extends Fragment {
                             .beginTransaction()
                             .addToBackStack(null)
                             .replace(R.id.main_view, new WeightFragment())
+                            .commit();
+                } else if(menu.get(i).equals("Sleep")){
+                    Log.d("MENU", "GOTO SLEEP");
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.main_view, new SleepFragment())
                             .commit();
                 } else {
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
