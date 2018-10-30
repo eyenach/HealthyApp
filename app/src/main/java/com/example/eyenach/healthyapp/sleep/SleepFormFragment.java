@@ -20,7 +20,6 @@ import com.example.eyenach.healthyapp.R;
 public class SleepFormFragment extends Fragment {
 
     SQLiteDatabase myDB;
-    Sleep _itemSleep;
     ContentValues _row;
 
     @Nullable
@@ -32,11 +31,6 @@ public class SleepFormFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        myDB = getActivity().openOrCreateDatabase("my.db", Context.MODE_PRIVATE, null);
-        myDB.execSQL("CREATE TABLE IF NOT EXISTS user(_id PRIMARY KEY AUTOINCREMENT, sleep VARCHAR(5), wake VARCHAR(5), date VARCHAR(20))");
-
-        Log.d("SLEEP_FORM", "CREATE TABLE ALREADY");
 
         initBackBtn();
         initSaveBtn();
@@ -61,6 +55,15 @@ public class SleepFormFragment extends Fragment {
         _saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                myDB = getActivity().openOrCreateDatabase("my.db", Context.MODE_PRIVATE, null);
+
+                myDB.execSQL(
+                        "CREATE TABLE IF NOT EXISTS user (_id INTEGER PRIMARY KEY AUTOINCREMENT, sleep VARCHAR(5), wake VARCHAR(5), date VARCHAR(11))"
+                );
+
+                Log.d("SLEEP_FORM", "CREATE TABLE ALREADY");
+
                 EditText _date = getView().findViewById(R.id.sleep_form_date);
                 EditText _sleep = getView().findViewById(R.id.sleep_form_sleep);
                 EditText _wake = getView().findViewById(R.id.sleep_form_wake);
@@ -69,7 +72,11 @@ public class SleepFormFragment extends Fragment {
                 String _sleepStr = _sleep.getText().toString();
                 String _wakeStr = _wake.getText().toString();
 
+                Log.d("SLEEP_FORM", _dateStr+_sleepStr+_wakeStr);
+
+                Sleep _itemSleep = new Sleep();
                 _itemSleep.setSleep(_sleepStr, _wakeStr, _dateStr);
+
                 _row = _itemSleep.getContent();
 
                 myDB.insert("user", null, _row);
