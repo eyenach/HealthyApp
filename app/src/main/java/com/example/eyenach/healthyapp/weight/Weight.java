@@ -5,8 +5,6 @@ public class Weight {
     String weight;
     String status;
 
-    public Weight(){}
-
     public Weight(String date, int weight, String status){
         this.date = date;
         this.weight = Integer.toString(weight);

@@ -9,14 +9,14 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/weight_item_date"
+            android:id="@+id/sleep_item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="29-Oct-2018"/>
 
         <TextView
-            android:id="@+id/weight_item_status"
+            android:id="@+id/sleep_item_diff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
@@ -24,19 +24,13 @@
             android:text="diff_time"/>
 
         <TextView
-            android:id="@+id/weight_item_weight"
+            android:id="@+id/sleep_item_sleep_wake"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25dp"
-            android:layout_below="@id/weight_item_date"
+            android:layout_below="@id/sleep_item_date"
             android:text="22:00 - 07:30"/>
 
-        <TextView
-            android:id="@+id/weight_item_kg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/weight_item_weight"
-            android:layout_toRightOf="@id/weight_item_weight"/>
 
     </RelativeLayout>
 

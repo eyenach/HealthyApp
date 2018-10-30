@@ -65,17 +65,17 @@ public class SleepFormFragment extends Fragment {
                 Log.d("SLEEP_FORM", "CREATE TABLE ALREADY");
 
                 EditText _date = getView().findViewById(R.id.sleep_form_date);
-                EditText _sleep = getView().findViewById(R.id.sleep_form_sleep);
-                EditText _wake = getView().findViewById(R.id.sleep_form_wake);
+                EditText _sleepHour = getView().findViewById(R.id.sleep_form_sleep_hour);
+                EditText _sleepMin = getView().findViewById(R.id.sleep_form_sleep_min);
+                EditText _wakeHour = getView().findViewById(R.id.sleep_form_wake_hour);
+                EditText _wakeMin = getView().findViewById(R.id.sleep_form_wake_min);
 
                 String _dateStr = _date.getText().toString();
-                String _sleepStr = _sleep.getText().toString();
-                String _wakeStr = _wake.getText().toString();
-
-                Log.d("SLEEP_FORM", _dateStr+_sleepStr+_wakeStr);
+                String _sleepStr = _sleepHour.getText().toString()+":"+_sleepMin.getText().toString();
+                String _wakeStr = _wakeHour.getText().toString()+":"+_wakeMin.getText().toString();
 
                 Sleep _itemSleep = new Sleep();
-                _itemSleep.setSleep(_sleepStr, _wakeStr, _dateStr);
+                _itemSleep.setContent(_sleepStr, _wakeStr, _dateStr);
 
                 _row = _itemSleep.getContent();
 
@@ -83,7 +83,14 @@ public class SleepFormFragment extends Fragment {
 
                 Log.d("SLEEP_FORM", "INSERT ALREADY");
 
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new SleepFragment())
+                        .addToBackStack(null)
+                        .commit();
+
                 Toast.makeText(getActivity(), "INSERT ALREADY", Toast.LENGTH_SHORT).show();
+                Log.d("SLEEP_FORM", "GOTO SLEEP");
 
             }
         });
