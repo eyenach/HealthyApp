@@ -11,11 +11,17 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/sleep_back_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="back"
+            android:layout_marginTop="15dp"/>
+
+        <Button
             android:id="@+id/sleep_add_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="add sleep"
-            android:layout_marginTop="15dp"/>
+            android:text="add sleep"/>
 
         <ListView
             android:id="@+id/sleep_list"

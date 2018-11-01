@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.eyenach.healthyapp.FormFragment;
+import com.example.eyenach.healthyapp.MenuFragment;
 import com.example.eyenach.healthyapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
@@ -61,6 +62,7 @@ public class WeightFragment extends Fragment {
         });
 
         initAddBtn();
+        initBackBtn();
     }
 
     void initAddBtn(){
@@ -72,6 +74,21 @@ public class WeightFragment extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, new FormFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+    }
+
+    void initBackBtn(){
+        Button _backBtn = getView().findViewById(R.id.weight_back_btn);
+        _backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("WEIGHT", "GOTO MENU");
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new MenuFragment())
                         .addToBackStack(null)
                         .commit();
             }

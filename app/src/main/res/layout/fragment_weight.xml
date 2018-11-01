@@ -9,13 +9,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:orientation="vertical">
-        
+
+        <Button
+            android:id="@+id/weight_back_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="back"
+            android:layout_marginTop="15dp"/>
+
         <Button
             android:id="@+id/weight_add_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
-            android:text="add weight"
-            android:layout_marginTop="15dp"/>
+            android:text="add weight"/>
         
         <ListView
             android:id="@+id/weight_list"
