@@ -67,8 +67,24 @@ public class SleepFragment extends Fragment {
         _sleepList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //get Position when Click
                 id = _sleepList.getItemIdAtPosition(position);
                 Log.d("SLEEP", "Position = "+id+" _id = "+(id+1));
+
+                //set Bundle
+                Bundle bundle = new Bundle();
+                bundle.putString("_id", String.valueOf(id));
+
+                SleepFormFragment fragobj = new SleepFormFragment();
+                fragobj.setArguments(bundle);
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new SleepFormFragment())
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("SLEEP", "GOTO SLEEP_FORM");
             }
         });
 

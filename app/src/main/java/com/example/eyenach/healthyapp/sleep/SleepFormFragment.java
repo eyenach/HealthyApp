@@ -25,6 +25,10 @@ public class SleepFormFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//
+//        String _bundleStr = getArguments().getString("_id");
+//        Log.d("SLEEP_FORM", "bundle = "+_bundleStr);
+
         return inflater.inflate(R.layout.fragment_form_sleep, container, false);
     }
 
@@ -65,14 +69,12 @@ public class SleepFormFragment extends Fragment {
                 Log.d("SLEEP_FORM", "CREATE TABLE ALREADY");
 
                 EditText _date = getView().findViewById(R.id.sleep_form_date);
-                EditText _sleepHour = getView().findViewById(R.id.sleep_form_sleep_hour);
-                EditText _sleepMin = getView().findViewById(R.id.sleep_form_sleep_min);
-                EditText _wakeHour = getView().findViewById(R.id.sleep_form_wake_hour);
-                EditText _wakeMin = getView().findViewById(R.id.sleep_form_wake_min);
+                EditText _sleep= getView().findViewById(R.id.sleep_form_sleep);
+                EditText _wake = getView().findViewById(R.id.sleep_form_wake);
 
                 String _dateStr = _date.getText().toString();
-                String _sleepStr = _sleepHour.getText().toString()+":"+_sleepMin.getText().toString();
-                String _wakeStr = _wakeHour.getText().toString()+":"+_wakeMin.getText().toString();
+                String _sleepStr = _sleep.getText().toString();
+                String _wakeStr = _wake.getText().toString();
 
                 Sleep _itemSleep = new Sleep();
                 _itemSleep.setContent(_sleepStr, _wakeStr, _dateStr);
