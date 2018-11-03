@@ -25,16 +25,19 @@ public class SleepFormFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//
-//        String _bundleStr = getArguments().getString("_id");
-//        Log.d("SLEEP_FORM", "bundle = "+_bundleStr);
-
         return inflater.inflate(R.layout.fragment_form_sleep, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@NonNull Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Bundle _bundle = getArguments();
+        if(_bundle != null){
+            Log.d("SLEEP_FORM", "bundle = "+_bundle.getInt("_id"));
+        } else {
+            Log.d("SLEEP_FORM", "Null");
+        }
 
         initBackBtn();
         initSaveBtn();

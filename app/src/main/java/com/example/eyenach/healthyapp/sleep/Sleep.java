@@ -72,7 +72,7 @@ public class Sleep {
             _hour = _wakeHour - _sleepHour;
         }
         if(_sleepMin >= _wakeMin){
-            _min = (_sleepMin - _wakeMin) + _wakeMin;
+            _min = 60 - (_sleepMin - _wakeMin);
             _hour -= 1;
         }
         else {

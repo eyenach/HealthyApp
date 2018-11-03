@@ -72,16 +72,21 @@ public class SleepFragment extends Fragment {
                 id = _sleepList.getItemIdAtPosition(position);
                 Log.d("SLEEP", "Position = "+id+" _id = "+(id+1));
 
-                //set Bundle
+                //create Bundle
                 Bundle bundle = new Bundle();
-                bundle.putString("_id", String.valueOf(id));
 
-                SleepFormFragment fragobj = new SleepFormFragment();
-                fragobj.setArguments(bundle);
+                //store into Bundle
+                bundle.putInt("_id", position);
+
+                // create Fragment instance
+                SleepFormFragment fragment = new SleepFormFragment();
+
+                //set Bundle into Fragment
+                fragment.setArguments(bundle);
 
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new SleepFormFragment())
+                        .replace(R.id.main_view, fragment)
                         .addToBackStack(null)
                         .commit();
                 Log.d("SLEEP", "GOTO SLEEP_FORM");
