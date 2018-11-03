@@ -21,6 +21,9 @@ public class SleepFormFragment extends Fragment {
 
     SQLiteDatabase myDB;
     ContentValues _row;
+    Bundle _bundle;
+    int _bundleInt;
+    EditText _date, _sleep, _wake;
 
     @Nullable
     @Override
@@ -32,15 +35,29 @@ public class SleepFormFragment extends Fragment {
     public void onActivityCreated(@NonNull Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Bundle _bundle = getArguments();
+        //open to use db
+        myDB = getActivity().openOrCreateDatabase("my.db", Context.MODE_PRIVATE, null);
+
+        //create table if not exist
+        myDB.execSQL(
+                "CREATE TABLE IF NOT EXISTS user (_id INTEGER PRIMARY KEY AUTOINCREMENT, sleep VARCHAR(5), wake VARCHAR(5), date VARCHAR(11))"
+        );
+        Log.d("SLEEP_FORM", "CREATE TABLE ALREADY");
+
+        //get Bundle
+        _bundle = getArguments();
         if(_bundle != null){
-            Log.d("SLEEP_FORM", "bundle = "+_bundle.getInt("_id"));
+            _bundleInt = _bundle.getInt("_id");
+            initUpdate(_bundleInt);
+
+            Log.d("SLEEP_FORM", "GOTO UPDATE SLEEP");
+
         } else {
-            Log.d("SLEEP_FORM", "Null");
+            initInsert();
+            Log.d("SLEEP_FORM", "GOTO INSERT");
         }
 
         initBackBtn();
-        initSaveBtn();
     }
 
     void initBackBtn(){
@@ -62,32 +79,6 @@ public class SleepFormFragment extends Fragment {
         _saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                myDB = getActivity().openOrCreateDatabase("my.db", Context.MODE_PRIVATE, null);
-
-                myDB.execSQL(
-                        "CREATE TABLE IF NOT EXISTS user (_id INTEGER PRIMARY KEY AUTOINCREMENT, sleep VARCHAR(5), wake VARCHAR(5), date VARCHAR(11))"
-                );
-
-                Log.d("SLEEP_FORM", "CREATE TABLE ALREADY");
-
-                EditText _date = getView().findViewById(R.id.sleep_form_date);
-                EditText _sleep= getView().findViewById(R.id.sleep_form_sleep);
-                EditText _wake = getView().findViewById(R.id.sleep_form_wake);
-
-                String _dateStr = _date.getText().toString();
-                String _sleepStr = _sleep.getText().toString();
-                String _wakeStr = _wake.getText().toString();
-
-                Sleep _itemSleep = new Sleep();
-                _itemSleep.setContent(_sleepStr, _wakeStr, _dateStr);
-
-                _row = _itemSleep.getContent();
-
-                myDB.insert("user", null, _row);
-
-                Log.d("SLEEP_FORM", "INSERT ALREADY");
-
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, new SleepFragment())
@@ -96,8 +87,35 @@ public class SleepFormFragment extends Fragment {
 
                 Toast.makeText(getActivity(), "INSERT ALREADY", Toast.LENGTH_SHORT).show();
                 Log.d("SLEEP_FORM", "GOTO SLEEP");
-
             }
         });
+    }
+
+    void initUpdate(int _id){
+
+
+        initSaveBtn();
+    }
+
+    void initInsert(){
+
+        _date = getView().findViewById(R.id.sleep_form_date);
+        _sleep= getView().findViewById(R.id.sleep_form_sleep);
+        _wake = getView().findViewById(R.id.sleep_form_wake);
+
+        String _dateStr = _date.getText().toString();
+        String _sleepStr = _sleep.getText().toString();
+        String _wakeStr = _wake.getText().toString();
+
+        Sleep _itemSleep = new Sleep();
+        _itemSleep.setContent(_sleepStr, _wakeStr, _dateStr);
+
+        _row = _itemSleep.getContent();
+
+        myDB.insert("user", null, _row);
+
+        Log.d("SLEEP_FORM", "INSERT ALREADY");
+
+        initSaveBtn();
     }
 }
