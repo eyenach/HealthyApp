@@ -65,8 +65,8 @@ public class Sleep {
         int _wakeHour = Integer.parseInt(_wake[0]);
         int _wakeMin = Integer.parseInt(_wake[1]);
 
-        if(_sleepHour >= _wakeHour){
-            _hour = (_sleepHour - _wakeHour);
+        if(_sleepHour > _wakeHour){
+            _hour = 24 - (_sleepHour - _wakeHour);
         }
         if(_sleepHour < _wakeHour) {
             _hour = _wakeHour - _sleepHour;
@@ -75,9 +75,7 @@ public class Sleep {
             _min = 60 - (_sleepMin - _wakeMin);
             _hour -= 1;
         }
-        if(_sleepMin == _wakeMin){
-            _hour += 1;
-        }if(_sleepMin < _wakeMin){
+        if(_sleepMin < _wakeMin){
             _min = _wakeMin - _sleepMin;
         }
 

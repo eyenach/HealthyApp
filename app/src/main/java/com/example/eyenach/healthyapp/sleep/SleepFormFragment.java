@@ -24,7 +24,6 @@ public class SleepFormFragment extends Fragment {
     ContentValues _row;
     Bundle _bundle;
     int _bundleInt;
-    int count = 0;
     EditText _date, _sleep, _wake;
     String _dateSql, _sleepSql, _wakeSql; //store data from db
     String _dateStr, _sleepStr, _wakeStr; //data into layout
@@ -56,6 +55,8 @@ public class SleepFormFragment extends Fragment {
         _sleep= getView().findViewById(R.id.sleep_form_sleep);
         _wake = getView().findViewById(R.id.sleep_form_wake);
 
+        int count = 0;
+
         //แสดงข้อมูลเก่า เมื่อต้องการจะแก้ไข
         if(_bundle != null){
             _bundleInt = _bundle.getInt("_id"); //get Bundle to Int
@@ -71,8 +72,11 @@ public class SleepFormFragment extends Fragment {
                     _date.setText(_dateSql);
                     _sleep.setText(_sleepSql);
                     _wake.setText(_wakeSql);
+
+                    Log.d("SLEEP_FORM", "Count = "+count+" _bundleInt = "+_bundleInt+" _id = "+_bundleInt);
+                } else {
+                    count += 1;
                 }
-                count += 1;
             }
         }
 
