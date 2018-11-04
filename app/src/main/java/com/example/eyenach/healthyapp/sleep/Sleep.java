@@ -66,20 +66,25 @@ public class Sleep {
         int _wakeMin = Integer.parseInt(_wake[1]);
 
         if(_sleepHour >= _wakeHour){
-            _hour = 24 - (_sleepHour - _wakeHour);
+            _hour = (_sleepHour - _wakeHour);
         }
         if(_sleepHour < _wakeHour) {
             _hour = _wakeHour - _sleepHour;
         }
-        if(_sleepMin >= _wakeMin){
+        if(_sleepMin > _wakeMin){
             _min = 60 - (_sleepMin - _wakeMin);
             _hour -= 1;
         }
-        else {
+        if(_sleepMin == _wakeMin){
+            _hour += 1;
+        }if(_sleepMin < _wakeMin){
             _min = _wakeMin - _sleepMin;
         }
 
-        this.timeDiff = _hour+":"+_min;
+        String _hourStr = String.format("%02d", _hour);
+        String _minStr = String.format("%02d", _min);
+
+        this.timeDiff = _hourStr+":"+_minStr;
     }
 
     public String getDate() {

@@ -2,6 +2,7 @@ package com.example.eyenach.healthyapp.sleep;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,7 +24,11 @@ public class SleepFormFragment extends Fragment {
     ContentValues _row;
     Bundle _bundle;
     int _bundleInt;
+    int count = 0;
     EditText _date, _sleep, _wake;
+    String _dateSql, _sleepSql, _wakeSql; //store data from db
+    String _dateStr, _sleepStr, _wakeStr; //data into layout
+    Sleep _itemSleep = new Sleep();
 
     @Nullable
     @Override
@@ -32,7 +37,7 @@ public class SleepFormFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@NonNull Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         //open to use db
@@ -46,17 +51,32 @@ public class SleepFormFragment extends Fragment {
 
         //get Bundle
         _bundle = getArguments();
+
+        _date = getView().findViewById(R.id.sleep_form_date);
+        _sleep= getView().findViewById(R.id.sleep_form_sleep);
+        _wake = getView().findViewById(R.id.sleep_form_wake);
+
+        //แสดงข้อมูลเก่า เมื่อต้องการจะแก้ไข
         if(_bundle != null){
-            _bundleInt = _bundle.getInt("_id");
-            initUpdate(_bundleInt);
+            _bundleInt = _bundle.getInt("_id"); //get Bundle to Int
 
-            Log.d("SLEEP_FORM", "GOTO UPDATE SLEEP");
+            Cursor myCursor = myDB.rawQuery("SELECT * FROM user", null);
+            while (myCursor.moveToNext()){
+                if(count == _bundleInt){
+                    _dateSql = myCursor.getString(3);
+                    _sleepSql = myCursor.getString(1);
+                    _wakeSql = myCursor.getString(2);
+                    _bundleInt = myCursor.getInt(0); //เช็คเป็น _id เพราะจะเอาไปอัพเดตตาราง
 
-        } else {
-            initInsert();
-            Log.d("SLEEP_FORM", "GOTO INSERT");
+                    _date.setText(_dateSql);
+                    _sleep.setText(_sleepSql);
+                    _wake.setText(_wakeSql);
+                }
+                count += 1;
+            }
         }
 
+        initSaveBtn();
         initBackBtn();
     }
 
@@ -79,43 +99,40 @@ public class SleepFormFragment extends Fragment {
         _saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                _dateStr = _date.getText().toString();
+                _sleepStr = _sleep.getText().toString();
+                _wakeStr = _wake.getText().toString();
+
+                if(_bundle != null){ //เช็คว่าข้อมูลไหนมีการอัพเดตมั่ง
+                    Log.d("SLEEP_FORM", "update = "+_dateStr+_sleepStr+_wakeStr);
+
+                    _itemSleep.setContent(_sleepStr, _wakeStr, _dateSql);
+                    _row = _itemSleep.getContent();
+
+                    myDB.update("user", _row, "_id="+_bundleInt, null);
+
+                    Log.d("SLEEP_FORM", "UPDATE ALREADY");
+                    Toast.makeText(getActivity(), "UPDATE COMPLETE", Toast.LENGTH_SHORT).show();
+                } else { //Bundle = null แปลว่าจะเพิ่มข้อมูล
+                    _itemSleep.setContent(_sleepStr, _wakeStr, _dateStr);
+
+                    _row = _itemSleep.getContent();
+
+                    myDB.insert("user", null, _row);
+
+                    Log.d("SLEEP_FORM", "INSERT ALREADY");
+                    Toast.makeText(getActivity(), "SAVE", Toast.LENGTH_SHORT).show();
+                }
+
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, new SleepFragment())
                         .addToBackStack(null)
                         .commit();
 
-                Toast.makeText(getActivity(), "INSERT ALREADY", Toast.LENGTH_SHORT).show();
                 Log.d("SLEEP_FORM", "GOTO SLEEP");
             }
         });
-    }
-
-    void initUpdate(int _id){
-
-
-        initSaveBtn();
-    }
-
-    void initInsert(){
-
-        _date = getView().findViewById(R.id.sleep_form_date);
-        _sleep= getView().findViewById(R.id.sleep_form_sleep);
-        _wake = getView().findViewById(R.id.sleep_form_wake);
-
-        String _dateStr = _date.getText().toString();
-        String _sleepStr = _sleep.getText().toString();
-        String _wakeStr = _wake.getText().toString();
-
-        Sleep _itemSleep = new Sleep();
-        _itemSleep.setContent(_sleepStr, _wakeStr, _dateStr);
-
-        _row = _itemSleep.getContent();
-
-        myDB.insert("user", null, _row);
-
-        Log.d("SLEEP_FORM", "INSERT ALREADY");
-
-        initSaveBtn();
     }
 }

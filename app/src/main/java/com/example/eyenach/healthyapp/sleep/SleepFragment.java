@@ -46,6 +46,8 @@ public class SleepFragment extends Fragment {
                 "CREATE TABLE IF NOT EXISTS user (_id INTEGER PRIMARY KEY AUTOINCREMENT, sleep VARCHAR(5), wake VARCHAR(5), date VARCHAR(11))"
         );
 
+//        myDB.delete("user", "_id="+5, null);
+
         //query data
         Cursor myCursor = myDB.rawQuery("SELECT * FROM user", null);
 
@@ -69,8 +71,7 @@ public class SleepFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 //get Position when Click
-                id = _sleepList.getItemIdAtPosition(position);
-                Log.d("SLEEP", "Position = "+id+" _id = "+(id+1));
+                Log.d("SLEEP", "Position = "+position);
 
                 //create Bundle
                 Bundle bundle = new Bundle();
