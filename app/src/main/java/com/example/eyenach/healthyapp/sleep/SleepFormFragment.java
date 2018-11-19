@@ -57,6 +57,7 @@ public class SleepFormFragment extends Fragment {
 
         int count = 0;
 
+
         //แสดงข้อมูลเก่า เมื่อต้องการจะแก้ไข
         if(_bundle != null){
             _bundleInt = _bundle.getInt("_id"); //get Bundle to Int
@@ -74,6 +75,7 @@ public class SleepFormFragment extends Fragment {
                     _wake.setText(_wakeSql);
 
                     Log.d("SLEEP_FORM", "Count = "+count+" _bundleInt = "+_bundleInt+" _id = "+_bundleInt);
+                    break;
                 } else {
                     count += 1;
                 }
