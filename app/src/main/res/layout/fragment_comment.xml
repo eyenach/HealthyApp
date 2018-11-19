@@ -7,22 +7,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="30dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/post_item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="id : title"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"/>
-
-        <TextView
-            android:id="@+id/post_item_body"
+        <Button
+            android:id="@+id/comment_back_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="body"/>
+            android:text="back"
+            android:layout_marginTop="15dp"/>
+
+        <ListView
+            android:id="@+id/comment_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+        </ListView>
 
     </LinearLayout>
 

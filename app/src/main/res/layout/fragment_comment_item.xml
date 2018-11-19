@@ -10,19 +10,33 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/post_item_title"
+            android:id="@+id/comment_item_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="id : title"
+            android:text="postId : id"
             android:textSize="25dp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"/>
 
         <TextView
-            android:id="@+id/post_item_body"
+            android:id="@+id/comment_item_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="body"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/comment_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="body"/>
+
+        <TextView
+            android:id="@+id/comment_item_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="body"
+            android:layout_marginBottom="10dp"/>
 
     </LinearLayout>
 
