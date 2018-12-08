@@ -41,6 +41,12 @@
             android:textColor="#fff"
             android:background="@color/colorPrimaryDark"
             android:layout_marginTop="10dp"/>
+
+        <CheckBox
+            android:id="@+id/login_remember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remembers Username"/>
         
         <TextView
             android:id="@+id/login_regis"

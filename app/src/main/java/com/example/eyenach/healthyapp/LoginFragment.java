@@ -1,5 +1,6 @@
 package com.example.eyenach.healthyapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +43,18 @@ public class LoginFragment extends Fragment {
 
         initLoginBtn();
         initRegisBtn();
+
+        CheckBox remember = getActivity().findViewById(R.id.login_remember);
+        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SharedPreferences sp = getActivity().getSharedPreferences("USERNAME", getContext().MODE_PRIVATE);
+                    sp.edit().putBoolean("remember", isChecked)
+                            .commit();
+                }
+            }
+        });
     }
 
     void initLoginBtn(){
